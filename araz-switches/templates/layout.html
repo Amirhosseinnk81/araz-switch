@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت دستگاه‌ها</title>
+</head>
+<body>
+    <header>
+        <h1>پنل مدیریت دستگاه‌ها</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">خانه</a></li>
+                <li><a href="{{ url_for('dashboard') }}">داشبورد</a></li>
+                <li><a href="{{ url_for('view_floors') }}">مشاهده طبقات</a></li>
+                <li><a href="{{ url_for('logout') }}">خروج</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024</p>
+    </footer>
+</body>
+</html>

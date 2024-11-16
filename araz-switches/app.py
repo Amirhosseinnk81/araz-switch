@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template,session, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from datetime import datetime
@@ -68,7 +68,7 @@ with app.app_context():
         db.session.commit()
 
 @app.route("/")
-def show_first_page():
+def home():
     return render_template("login.html")
 
 # تنظیمات لاگین
@@ -108,7 +108,6 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-
 
         if user and user.password == password:
             login_user(user)
@@ -178,6 +177,14 @@ def view_devices(floor_id):
     devices = Device.query.filter_by(floor_id=floor.id).all()
     return render_template('view_devices.html', floor=floor, devices=devices)
 
+@app.route('/device/<int:device_id>')
+@login_required
+def device_details(device_id):
+    device = Device.query.get_or_404(device_id)
+    return render_template('device_details.html', device=device)
+
+
+
 # صفحه ویرایش دستگاه
 @app.route('/edit_device/<int:device_id>', methods=['GET', 'POST'])
 @login_required
@@ -193,6 +200,7 @@ def edit_device(device_id):
         return redirect(url_for('view_devices', floor_id=device.floor_id))
 
     return render_template('edit_device.html', device=device)
+
 
 # روت برای افزودن کاربر جدید
 @app.route('/add_user', methods=['GET', 'POST'])
@@ -319,5 +327,4 @@ def delete_device(device_id):
 if __name__ == "__main__":
     app.run(debug=True)
 
-
-# host='192.168.143.233', port=5000
+    # host='192.168.143.233', port=5000

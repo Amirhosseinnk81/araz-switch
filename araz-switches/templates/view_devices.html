@@ -14,8 +14,8 @@
 
         body {
             font-family: 'Vazir', sans-serif;
-            background: linear-gradient(to right, #b3d9ff, #d6eaff); /* پس‌زمینه آبی کم‌رنگ */
-            color: #333;
+            background: linear-gradient(135deg, #4f5d73, #2c3e50); /* پس‌زمینه مدرن */
+            color: #f0f0f5;
             line-height: 1.8;
             direction: rtl;
             text-align: right;
@@ -25,251 +25,106 @@
             justify-content: center;
             align-items: center;
             overflow: auto;
-            animation: fadeIn 1s ease-in-out;
+            padding: 20px;
+            animation: fadeIn 1s ease-out;
         }
 
-        /* Fade In Effect */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
-            width: 90%;
+            width: 100%;
             max-width: 1200px;
+            background-color: rgba(44, 62, 80, 0.9);
             padding: 40px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             animation: slideIn 0.8s ease-out;
         }
 
-        /* Slide In Effect for Container */
         @keyframes slideIn {
             from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
         h2 {
-            font-size: 40px;
-            font-weight: 600;
-            color: #004080;
+            font-size: 42px;
+            color: #ffcc00; /* رنگ طلایی */
             margin-bottom: 30px;
             text-align: center;
-            opacity: 0;
-            animation: fadeInTitle 1s forwards;
-            animation-delay: 0.2s;
-        }
-
-        /* Fade In Title with delay */
-        @keyframes fadeInTitle {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            font-weight: 600;
         }
 
         ul {
             list-style-type: none;
             padding: 0;
+            width: 100%;
         }
 
         li {
-            background-color: #e6f2ff;
-            border: 1px solid #99ccff;
-            margin-bottom: 25px;
-            padding: 25px;
-            border-radius: 10px;
+            background-color: #34495e;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: popUp 0.6s ease-in-out both;
-        }
-
-        /* Pop-Up Effect for List Items */
-        @keyframes popUp {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
         }
 
         li:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 24px rgba(51, 153, 255, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         li a {
-        color: #0059b3;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.3s ease;
-        margin-top: 15px;
-        display: inline; /* این خط برای محدود کردن اندازه لینک به اندازه متن */
-        position: relative;
+            color: #fffffd;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            margin-top: 15px;
+            position: relative;
         }
 
         li a::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        background: #0059b3;
-        bottom: 0;
-        left: 0;
-        transform: scaleX(0);
-        transform-origin: bottom right;
-        transition: transform 0.3s ease-out;
-    }
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #ffcc0000;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
         li a:hover::after {
             transform: scaleX(1);
             transform-origin: bottom left;
         }
 
-        button {
-            background-color: #66b3ff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 15px 30px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background-color 0.3s ease, transform 0.1s ease-in-out;
-            margin-top: 15px;
-            display: inline-block;
-            width: 100%;
-            box-shadow: 0 4px 10px rgba(0, 90, 180, 0.2);
-        }
-
-        button:hover {
-            background-color: #3399ff;
-            transform: scale(1.05);
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
         .back-link {
+            background-color: #3524a300;
             display: block;
             text-align: center;
-            margin-top: 40px;
+            margin-top: 30px;
             font-size: 18px;
-            color: #3399ff;
+            color: #ffffff;
             text-decoration: none;
             transition: color 0.3s ease, transform 0.3s ease;
         }
 
         .back-link:hover {
-            color: #1a8cff;
+            color: #12bbf3;
             transform: translateY(-5px);
         }
 
-        .description-form {
-            margin-top: 25px;
-            padding: 25px;
-            background-color: #cce6ff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(51, 153, 255, 0.2);
-            opacity: 0;
-            animation: fadeIn 1s forwards;
-            animation-delay: 0.5s;
-        }
-
-        .description-form textarea {
-            font-family: 'Vazir', sans-serif;
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #99ccff;
-            font-size: 18px;
-            resize: vertical;
-            box-shadow: 0 2px 6px rgba(51, 153, 255, 0.15);
-            transition: border-color 0.3s ease;
-        }
-
-        .description-form textarea:focus {
-            border-color: #0059b3;
-        }
-
-        .device-details {
-            margin-top: 20px;
-            width: 100%;
-            border-collapse: collapse;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        .device-details th, .device-details td {
-            padding: 15px;
-            text-align: right;
-            border: 1px solid #99ccff;
-            font-size: 18px;
-        }
-
-        .device-details th {
-            background-color: #3399ff;
-            color: white;
-        }
-
-        .device-details td {
-            background-color: #f0faff;
-            word-wrap: break-word;
-            word-break: break-word;
-            white-space: normal;
-        }
-
-        /* ریسپانسیو برای صفحه‌های کوچک */
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 36px;
-            }
-
-            li {
-                padding: 20px;
-                font-size: 16px;
-            }
-
-            button, .description-form button {
-                padding: 12px 24px;
-                font-size: 16px;
-            }
-
-            .back-link {
-                font-size: 16px;
-            }
-
-            .device-details th, .device-details td {
-                font-size: 16px;
-                padding: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 32px;
-            }
-
-            li {
-                padding: 18px;
-                font-size: 14px;
-            }
-
-            button, .description-form button {
-                font-size: 14px;
-                padding: 10px 20px;
-            }
-
-            .back-link {
-                font-size: 14px;
-            }
-
-            .device-details th, .device-details td {
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -281,54 +136,7 @@
             <ul>
                 {% for device in devices %}
                     <li>
-                        <table class="device-details">
-                            <tr>
-                                <th>نام دستگاه:</th>
-                                <td>{{ device.name }}</td>
-                            </tr>
-                            <tr>
-                                <th>IP:</th>
-                                <td>{{ device.ip }}</td>
-                            </tr>
-                            <tr>
-                                <th>VLAN:</th>
-                                <td>{{ device.vlan }}</td>
-                            </tr>
-                            <tr>
-                                <th>توضیحات:</th>
-                                <td>{{ device.description }}</td>
-                            </tr>
-                        </table>
-
-                        {% if device.descriptions %}
-                            <h4>توضیحات:</h4>
-                            <ul>
-                                {% for description in device.descriptions %}
-                                    <li>
-                                        <strong>{{ description.user.username }}:</strong>
-                                        {{ description.content }}
-                                        <em>(تاریخ: {{ description.Date|to_jalali }})</em>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                        
-                        {% if current_user.username == 'user1' %}
-                            <a href="{{ url_for('edit_device', device_id=device.id) }}">ویرایش</a>
-                            <form method="POST" action="{{ url_for('delete_device', device_id=device.id) }}" style="display: inline;">
-                                <button type="submit" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این دستگاه را حذف کنید؟')">حذف دستگاه</button>
-                            </form>
-                        {% endif %}
-
-                        {% if current_user.username != 'user1' %}
-                            <div class="description-form">
-                                <h3>افزودن توضیحات</h3>
-                                <form method="POST" action="{{ url_for('add_description', device_id=device.id) }}">
-                                    <textarea name="description" placeholder="توضیحات خود را وارد کنید" required></textarea><br>
-                                    <button type="submit">افزودن توضیحات</button>
-                                </form>
-                            </div>
-                        {% endif %}
+                        <a href="{{ url_for('device_details', device_id=device.id) }}">{{ device.name }}</a>
                     </li>
                 {% endfor %}
             </ul>

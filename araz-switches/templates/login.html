@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ورود</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet"> <!-- لینک به فونت فارسی -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet">
     <style>
+
+        *{
+            -webkit-tap-highlight-color:transparent;
+        }
+
+        
         /* تنظیمات کلی بدنه */
         body {
             font-family: 'Vazir', sans-serif;
@@ -13,72 +19,62 @@
             text-align: right;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, #0762bcf5, #2c3e50); /* گرادیانت از آبی کم‌رنگ به مشکی */
+            background: linear-gradient(135deg, #1f1f2e, #2c3e50);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            animation: gradientShift 5s ease-in-out infinite; /* انیمیشن تغییر گرادیانت */
+            animation: gradientBackground 6s infinite alternate ease-in-out;
         }
 
-        /* انیمیشن تغییر گرادیانت */
-  
-     
-            
-        
+        /* انیمیشن تغییر پس‌زمینه */
+        @keyframes gradientBackground {
+            0% { background: #1f1f2e; }
+            100% { background: #3a506b; }
+        }
 
         /* استایل برای فرم ورود */
         .form-container {
-            background: rgba(255, 255, 255, 0.9); /* پس‌زمینه شفاف برای فرم */
+            background: rgba(44, 62, 80, 0.85);
             padding: 50px;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(194, 188, 188, 0.759);
+            border-radius: 15px;
             width: 100%;
             max-width: 400px;
-            backdrop-filter: blur(10px);
+            box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: slideUp 0.6s ease-out; /* انیمیشن ورود */
+            animation: slideIn 1.5s ease-out forwards;
+            transform-origin: center center;
         }
 
-        /* انیمیشن ورود فرم */
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* انیمیشن ورود */
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateY(-30px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         h2 {
             font-size: 24px;
             margin-bottom: 20px;
-            color: #333;
-            animation: fadeIn 1s ease-in; /* انیمیشن فیداین برای عنوان */
+            color: #ffcc00;
+            /* animation: textGlow 1.2s ease-out infinite alternate; */
+            opacity: 0.9;
         }
 
-        /* انیمیشن فیداین */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+        /* افکت نورانی روی متن */
+        /* @keyframes textGlow {
+            0% { text-shadow: 0px 0px 10px rgba(255, 205, 0, 0.5), 0px 0px 20px rgba(255, 205, 0, 0.7); }
+            100% { text-shadow: 0px 0px 15px rgba(255, 205, 0, 0.8), 0px 0px 30px rgba(255, 205, 0, 1); }
+        } */
 
         label {
             font-size: 18px;
             margin-bottom: 10px;
             display: block;
-            color: #555;
+            color: #f0f0f5;
             text-align: right;
-            transition: all 0.3s ease;
         }
 
         input[type="text"], input[type="password"] {
@@ -86,120 +82,59 @@
             padding: 12px;
             margin: 10px 0 20px 0;
             border-radius: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid #555;
+            background: #3c3c55;
+            color: #f0f0f5;
             font-size: 16px;
-            color: #333;
             box-sizing: border-box;
             transition: all 0.3s ease;
         }
 
         /* افکت تمرکز برای فیلدهای ورودی */
         input[type="text"]:focus, input[type="password"]:focus {
-            border-color: #4CAF50;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-            transform: scale(1.05); /* انیمیشن کوچک شدن و بزرگ شدن فیلد */
+            border-color: #ffcc00;
+            box-shadow: 0 0 10px rgba(255, 205, 0, 0.5);
+            transform: scale(1.05);
         }
 
         button {
+            font-family: 'Vazir', sans-serif;
             width: 100%;
             padding: 15px;
-            background: linear-gradient(45deg, #4CAF50, #81C784); /* گرادیانت دکمه */
-            color: white;
+            background: #43a596;
+            color: #ffffff;
             border: none;
             border-radius: 8px;
             font-size: 22px;
             cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease-in-out;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            animation: pulse 1.5s ease-in-out infinite; /* انیمیشن پالس دکمه */
+            animation: pulse 1.5s ease-in-out infinite;
         }
 
         /* انیمیشن پالس */
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        /* افکت‌ها برای دکمه */
         button:hover {
-            background: linear-gradient(45deg, #66bb6a, #4CAF50);
-            transform: translateY(-4px); /* افکت جابجایی دکمه */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background: #4e968b65;
+            box-shadow: 0px 8px 15px rgba(255, 205, 0, 0.4);
+            transform: scale(1.1);
         }
 
         button:active {
-            transform: translateY(2px); /* زمانی که دکمه فشرده می‌شود */
+            transform: translateY(2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .error {
-            color: red;
+            color: #ff4d4d;
             font-size: 16px;
             margin-top: 15px;
             text-align: center;
-            animation: fadeIn 1s ease-in;
-        }
-
-        .error p {
-            margin: 10px 0;
-        }
-
-        /* Media Queries برای ریسپانسیو */
-        @media (max-width: 600px) {
-            .form-container {
-                padding: 30px;
-                max-width: 90%;
-            }
-
-            h2 {
-                font-size: 20px;
-            }
-
-            label {
-                font-size: 16px;
-            }
-
-            input[type="text"], input[type="password"] {
-                padding: 10px;
-                font-size: 14px;
-            }
-
-            button {
-                padding: 12px;
-                font-size: 16px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .form-container {
-                padding: 20px;
-                max-width: 85%;
-            }
-
-            h2 {
-                font-size: 18px;
-            }
-
-            label {
-                font-size: 14px;
-            }
-
-            input[type="text"], input[type="password"] {
-                padding: 8px;
-                font-size: 12px;
-            }
-
-            button {
-                padding: 10px;
-                font-size: 14px;
-            }
         }
     </style>
 </head>
