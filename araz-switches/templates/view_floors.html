@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست طبقات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet"> <!-- فونت فارسی -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazir', sans-serif;
+            background: linear-gradient(to right, #0762bc, #2c3e50); /* گرادیانت آبی به مشکی */
+            color: #333;
+            line-height: 1.6;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px); /* پس‌زمینه محو برای ایجاد عمق */
+        }
+
+        h2 {
+            font-size: 36px; /* افزایش اندازه فونت */
+            font-weight: 600;
+            color: #000000; /* سبز برای تیتر */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-size: 20px; /* افزایش اندازه فونت */
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        li a {
+            color: #0762bc; /* رنگ لینک ها */
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease, transform 0.3s ease;
+            font-size: 20px; /* افزایش اندازه فونت */
+        }
+
+        li a:hover {
+            color: #2c3e50; /* رنگ تغییر یافته لینک‌ها هنگام هاور */
+            transform: translateX(5px); /* حرکت به سمت راست در هاور */
+        }
+
+        li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #0762bc;
+            bottom: 0;
+            left: 50%;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        li a:hover::after {
+            width: 100%;
+        }
+
+        button {
+            background-color: #2196F3; /* رنگ آبی دکمه */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 20px; /* افزایش اندازه فونت */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1976D2; /* رنگ تیره تر دکمه در هاور */
+            transform: translateY(-4px); /* حرکت دکمه به سمت بالا */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(2px); /* حرکت دکمه به سمت پایین هنگام کلیک */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-link {
+            display: inline-block;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 20px; /* افزایش اندازه فونت */
+            color: white;
+            background-color: #0762bc; /* رنگ پس زمینه لینک */
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: #2c3e50;
+            transform: translateX(5px); /* حرکت لینک به سمت راست */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-link:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ریسپانسیو برای صفحه‌های کوچک */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            h2 {
+                font-size: 30px; /* افزایش اندازه فونت در صفحه‌های کوچک */
+            }
+
+            li {
+                padding: 15px;
+                font-size: 18px; /* افزایش اندازه فونت */
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 18px; /* افزایش اندازه فونت */
+            }
+
+            .back-link {
+                font-size: 16px; /* افزایش اندازه فونت */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 26px; /* افزایش اندازه فونت */
+            }
+
+            li {
+                padding: 10px;
+                font-size: 16px; /* افزایش اندازه فونت */
+            }
+
+            button {
+                font-size: 16px;
+                padding: 6px 12px;
+            }
+
+            .back-link {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>لیست طبقات</h2>
+
+        <ul>
+            {% if floors %}
+                {% for floor in floors %}
+                    <li>
+                        <strong>{{ floor.name }}</strong>
+                        <a href="{{ url_for('view_devices', floor_id=floor.id) }}">مشاهده دستگاه‌ها</a>
+
+                        <!-- دکمه افزودن دستگاه برای هر طبقه نمایش داده می‌شود -->
+                        {% if current_user.username == 'user1' %}
+                            <a href="{{ url_for('add_device', floor_id=floor.id) }}">
+                                <button>افزودن دستگاه</button>
+                            </a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center; font-size: 18px; color: #f44336;">هیچ طبقه‌ای وارد نکرده‌اید.</p>
+            {% endif %}
+        </ul>
+
+        <a href="{{ url_for('dashboard') }}" class="back-link">بازگشت به داشبورد</a>
+    </div>
+
+</body>
+</html>

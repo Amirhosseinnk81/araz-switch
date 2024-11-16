@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>افزودن کاربر جدید</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet"> <!-- فونت فارسی -->
+    <style>
+        body {
+            font-family: 'Vazir', sans-serif;
+            direction: rtl;
+            text-align: right;
+            background: linear-gradient(to right, #0762bcf5, #2c3e50); /* گرادیانت آبی به خاکستری */
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            animation: fadeIn 0.8s ease-out; /* انیمیشن نمایان شدن */
+        }
+
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 36px;
+            color: #006aff; /* همان رنگ آبی روشن */
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInTitle 1s 0.2s forwards; /* انیمیشن برای عنوان */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+            outline: none;
+            transform: translateY(-2px); /* حرکت ورودی هنگام فوکوس */
+        }
+
+        button {
+            font-family: 'Vazir', sans-serif;
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background-color: #0283e0; /* همان رنگ دکمه قبلی */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: buttonAnim 0.8s ease-out forwards;
+        }
+
+        button:hover {
+            background-color: #006aff;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #388e3c;
+        }
+
+        /* دکمه بازگشت */
+        .back-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background-color: #f44336; /* رنگ قرمز برای دکمه بازگشت */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 15px;
+        }
+
+        .back-button:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+
+        /* پیام‌های خطا و موفقیت */
+        .alert {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            opacity: 0;
+            animation: fadeInAlert 0.8s 0.2s forwards;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.error {
+            background-color: #f44336;
+        }
+
+        /* انیمیشن‌های مختلف */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInTitle {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes buttonAnim {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInAlert {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            .container {
+                margin: 30px 20px;
+                padding: 25px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            label {
+                font-size: 16px;
+            }
+
+            input {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .back-button {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .back-button {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>افزودن کاربر جدید</h2>
+
+        <!-- نمایش پیام flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">نام کاربری</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">رمز عبور</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+            <button type="submit">افزودن کاربر</button>
+        </form>
+
+        <!-- دکمه بازگشت به داشبورد -->
+        <a href="{{ url_for('dashboard') }}">
+            <button class="back-button">بازگشت به داشبورد</button>
+        </a>
+    </div>
+</body>
+</html>

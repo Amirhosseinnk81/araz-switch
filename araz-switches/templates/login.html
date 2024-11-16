@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet"> <!-- لینک به فونت فارسی -->
+    <style>
+        /* تنظیمات کلی بدنه */
+        body {
+            font-family: 'Vazir', sans-serif;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #0762bcf5, #2c3e50); /* گرادیانت از آبی کم‌رنگ به مشکی */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            animation: gradientShift 5s ease-in-out infinite; /* انیمیشن تغییر گرادیانت */
+        }
+
+        /* انیمیشن تغییر گرادیانت */
+  
+     
+            
+        
+
+        /* استایل برای فرم ورود */
+        .form-container {
+            background: rgba(255, 255, 255, 0.9); /* پس‌زمینه شفاف برای فرم */
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(194, 188, 188, 0.759);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: slideUp 0.6s ease-out; /* انیمیشن ورود */
+        }
+
+        /* انیمیشن ورود فرم */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            animation: fadeIn 1s ease-in; /* انیمیشن فیداین برای عنوان */
+        }
+
+        /* انیمیشن فیداین */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            color: #555;
+            text-align: right;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            color: #333;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        /* افکت تمرکز برای فیلدهای ورودی */
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            transform: scale(1.05); /* انیمیشن کوچک شدن و بزرگ شدن فیلد */
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #4CAF50, #81C784); /* گرادیانت دکمه */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: pulse 1.5s ease-in-out infinite; /* انیمیشن پالس دکمه */
+        }
+
+        /* انیمیشن پالس */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* افکت‌ها برای دکمه */
+        button:hover {
+            background: linear-gradient(45deg, #66bb6a, #4CAF50);
+            transform: translateY(-4px); /* افکت جابجایی دکمه */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(2px); /* زمانی که دکمه فشرده می‌شود */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .error {
+            color: red;
+            font-size: 16px;
+            margin-top: 15px;
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .error p {
+            margin: 10px 0;
+        }
+
+        /* Media Queries برای ریسپانسیو */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 30px;
+                max-width: 90%;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            label {
+                font-size: 16px;
+            }
+
+            input[type="text"], input[type="password"] {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .form-container {
+                padding: 20px;
+                max-width: 85%;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input[type="text"], input[type="password"] {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>ورود به حساب کاربری</h2>
+        <form method="POST" action="{{ url_for('login') }}">
+            <label for="username">نام کاربری:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">رمز عبور:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">ورود</button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="error">
+                    {% for category, message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

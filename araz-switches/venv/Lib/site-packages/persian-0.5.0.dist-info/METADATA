@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: persian
+Version: 0.5.0
+Summary: Simple Python library for Persian language localization
+Home-page: https://github.com/rezakamalifard/Persian
+Author: Reza Kamalifard
+Author-email: mrkamalifard@gmail.com
+License: Apache License 2.0
+Keywords: example documentation tutorial
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Topic :: Utilities
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+
+UNKNOWN
+
+

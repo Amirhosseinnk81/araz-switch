@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویرایش کاربر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* تنظیمات پایه */
+        body {
+            font-family: 'Vazir', sans-serif;
+            background: linear-gradient(to right, #0762bcf5, #2c3e50);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* استایل کانتینر فرم */
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* عنوان فرم */
+        h2 {
+            font-size: 36px;
+            color: #006aff;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInTitle 1s 0.2s forwards;
+        }
+
+        /* استایل فیلدهای ورودی */
+        label {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        button {
+            font-family: 'Vazir', sans-serif;
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background-color: #0283e0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: buttonAnim 0.8s ease-out forwards;
+        }
+
+        button:hover {
+            background-color: #006aff;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #388e3c;
+        }
+
+        /* دکمه بازگشت به لیست کاربران */
+        .back-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 15px;
+        }
+
+        .back-button:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+
+        /* انیمیشن‌های مختلف */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInTitle {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes buttonAnim {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            .container {
+                margin: 30px 20px;
+                padding: 25px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            label {
+                font-size: 16px;
+            }
+
+            input {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .back-button {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .back-button {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ویرایش اطلاعات کاربری</h2>
+
+        <form method="POST" action="{{ url_for('edit_user', user_id=user.id) }}">
+            <div class="form-group">
+                <label for="username">نام کاربری:</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">رمز عبور:</label>
+                <input type="password" id="password" name="password" value="{{ user.password }}" required>
+            </div>
+
+            <button type="submit">به‌روزرسانی اطلاعات</button>
+        </form>
+
+        <!-- دکمه بازگشت به لیست کاربران -->
+        <a href="{{ url_for('show_users') }}">
+            <button class="back-button">بازگشت به لیست کاربران</button>
+        </a>
+    </div>
+</body>
+</html>
