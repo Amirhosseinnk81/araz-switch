@@ -4,6 +4,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from datetime import datetime
 import pytz
 import jdatetime
+from functools import wraps
 
 # راه‌اندازی اپلیکیشن Flask
 app = Flask(__name__)
@@ -111,11 +112,26 @@ def login():
 
         if user and user.password == password:
             login_user(user)
-            return redirect('dashboard')  # به صفحه‌ی مورد نظر یا داشبورد هدایت می‌شود
+            next_url = session.pop('next_url', None)
+            return redirect(next_url or url_for('dashboard'))  # به صفحه‌ی مورد نظر یا داشبورد هدایت می‌شود
         else:
             flash('نام کاربری یا رمز عبور اشتباه است', 'danger')
     
     return render_template('login.html')
+
+
+def require_login_and_redirect(f):
+    """دکوراتوری که کاربر را به صفحه ورود هدایت می‌کند و پس از لاگین به صفحه قبلی بازمی‌گرداند."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated:  # بررسی وضعیت لاگین
+            # ذخیره URL فعلی در سشن برای هدایت بعد از لاگین
+            session['next_url'] = request.url
+            flash('لطفاً برای ادامه لاگین کنید.', 'warning')
+            return redirect(url_for('login'))  # هدایت به صفحه لاگین
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 # صفحه داشبورد پس از ورود
 @app.route('/dashboard')
@@ -178,7 +194,7 @@ def view_devices(floor_id):
     return render_template('view_devices.html', floor=floor, devices=devices)
 
 @app.route('/device/<int:device_id>')
-@login_required
+@require_login_and_redirect
 def device_details(device_id):
     device = Device.query.get_or_404(device_id)
     return render_template('device_details.html', device=device)
