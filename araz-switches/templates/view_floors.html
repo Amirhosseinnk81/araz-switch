@@ -52,7 +52,7 @@
 
         h2 {
             font-size: 36px;
-            color: #ffcc00;
+            color: #ffffff;
             margin-bottom: 20px;
             text-align: center;
             opacity: 0.9;
@@ -231,11 +231,15 @@
                 {% for floor in floors %}
                     <li onclick="toggleButtons(this)">
                         <strong>{{ floor.name }}</strong>
-                        <div class="btn-container">
-                            <a href="{{ url_for('view_devices', floor_id=floor.id) }}">
-                                <button class="view-btn">مشاهده دستگاه‌ها</button>
-                            </a>
-                            {% if current_user.username == 'user1' %}
+                        
+                            <div class="btn-container">
+                                {% if not devices %}
+                                <a href="{{ url_for('view_devices', floor_id=floor.id) }}">
+                                    <button class="view-btn">مشاهده دستگاه‌ها</button>
+                                </a>
+                                {% endif %}  
+                        
+                            {% if current_user.username == 'superuser' %}
                                 <a href="{{ url_for('add_device', floor_id=floor.id) }}">
                                     <button class="add-btn">افزودن دستگاه</button>
                                 </a>

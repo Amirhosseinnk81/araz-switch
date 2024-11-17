@@ -5,6 +5,7 @@ from datetime import datetime
 import pytz
 import jdatetime
 from functools import wraps
+from flask_principal import Principal, Permission, RoleNeed
 
 # راه‌اندازی اپلیکیشن Flask
 app = Flask(__name__)
@@ -60,8 +61,8 @@ with app.app_context():
 
     if not User.query.first():
         users = [
-            User(username='user1', password='password1'),
-            User(username='user2', password='password2'),
+            User(username='superuser', password='password1'),
+            User(username='admin', password='password2'),
             User(username='user3', password='password3'),
             User(username='user4', password='password4')
         ]
@@ -132,6 +133,12 @@ def require_login_and_redirect(f):
         return f(*args, **kwargs)
     return decorated_function
 
+# مقداردهی اولیه
+principals = Principal(app)
+
+# تعریف نیازمندی‌های نقش
+admin_permission = Permission(RoleNeed('admin'))
+moderator_permission = Permission(RoleNeed('superuser'))
 
 # صفحه داشبورد پس از ورود
 @app.route('/dashboard')
@@ -141,6 +148,7 @@ def dashboard():
 
 # صفحه اضافه کردن floor
 @app.route('/add_floor', methods=['GET', 'POST'])
+@admin_permission.require()
 @login_required
 def add_floor():
     if request.method == 'POST':
@@ -149,7 +157,7 @@ def add_floor():
         db.session.add(new_floor)
         db.session.commit()
         return redirect(url_for('view_floors'))
-
+    
     return render_template('add_floor.html')
 
 # نمایش لیست floor ها

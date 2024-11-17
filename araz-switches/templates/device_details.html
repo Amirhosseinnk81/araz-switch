@@ -34,6 +34,10 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .edit-link{
+            color: #46d06dc2;
+        }
+
         .container {
             width: 100%;
             max-width: 1200px;
@@ -198,6 +202,7 @@
         }
 
         .device-details th, .device-details td {
+            
             padding: 15px;
             text-align: right;
             border: 1px solid #f6f6f663;
@@ -205,11 +210,13 @@
         }
 
         .device-details th {
+            text-align: center;
             background-color: #ffcc0000;
             color: white;
         }
 
         .device-details td {
+            
             background-color: #f0faff00;
             word-wrap: break-word;
             word-break: break-word;
@@ -318,39 +325,46 @@
 
         <table class="device-details">
             <tr>
-                <th>نام دستگاه:</th>
+                <th>Name </th>
                 <td>{{ device.name }}</td>
             </tr>
             <tr>
-                <th>ip دستگاه:</th>
+                <th>Ip </th>
                 <td>{{ device.ip }}</td>
             </tr>
             <tr>
-                <th> vlan:</th>
+                <th> Vlan</th>
                 <td>{{ device.vlan }}</td>
             </tr>
             <tr>
             </tr>
             <tr>
-                <th>توضیحات :</th>
+                <th>Description </th>
                 <td>{{ device.description }}</td>
             </tr>
         </table>
 
         {% if device.descriptions %}
-        <h4>توضیحات:</h4>
+        <h4>description</h4>
         <ul>
             {% for description in device.descriptions %}
                 <li>
                     <strong>{{ description.user.username }}:</strong>
                     {{ description.content }}
                     <em>(تاریخ: {{ description.Date|to_jalali }})</em>
+                    {% if current_user.username == 'superuser'  or current_user.username== 'admin' %}
+                    <a href="{{ url_for('edit_description', description_id=description.id) }}" class="edit-link">
+                        <button>
+                            ویرایش توضیحات
+                        </button>
+                    </a>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
     {% endif %}
 
-    {% if current_user.username == 'user1' %}
+    {% if current_user.username == 'superuser' %}
    
     <a href="{{ url_for('edit_device', device_id=device.id) }}" class="back-link"><i class="fa fa-edit"></i> ویرایش</a>
     <form method="POST" action="{{ url_for('delete_device', device_id=device.id) }}" style="display: inline;">
@@ -358,7 +372,7 @@
     </form>
 {% endif %}
 
-{% if current_user.username != 'user1' %}
+{% if current_user.username != 'superuser' %}
     <div class="description-form">
         <h3>افزودن توضیحات</h3>
         <form method="POST" action="{{ url_for('add_description', device_id=device.id) }}">
@@ -367,6 +381,11 @@
         </form>
     </div>
 {% endif %}
+
+<!-- {% if current_user.username in ['user1', 'user2'] %}
+    <a href="{{ url_for('edit_description', description_id=description.id) }}" class="edit-link">ویرایش توضیحات</a>
+{% endif %} -->
+
 
 <a href="{{ url_for('view_devices', floor_id=device.floor_id) }}" class="back-link">بازگشت به لیست دستگاه‌ها</a>
 

@@ -122,30 +122,7 @@
             transform: scale(1.05);
         }
 
-        /* پیام‌های خطا و موفقیت */
-        .alert {
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-            color: white;
-            font-weight: bold;
-            opacity: 0;
-            animation: fadeInAlert 0.8s 0.2s forwards;
-        }
-
-        .alert.warning {
-            background-color: #ff9800;
-        }
-
-        .alert.success {
-            background-color: #4CAF50;
-        }
-
-        .alert.error {
-            background-color: #f44336;
-        }
-
+   
         /* انیمیشن‌های مختلف */
         @keyframes fadeIn {
             0% {
@@ -255,17 +232,7 @@
     <div class="container">
         <h2>افزودن طبقه جدید</h2>
 
-        <!-- نمایش پیام flash -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert {{ category }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
+   
         <form method="POST">
             <div class="form-group">
                 <label for="floor_name">نام طبقه</label>
@@ -281,4 +248,15 @@
         </a>
     </div>
 </body>
+
+<script>
+    // پس از 5 ثانیه پیام‌ها را مخفی کن
+    setTimeout(function() {
+        var alert = document.getElementById('alert');
+        if (alert) {
+            alert.style.display = 'none';
+        }
+    }, 5000); // 5000 میلی‌ثانیه = 5 ثانیه
+</script>
+
 </html>

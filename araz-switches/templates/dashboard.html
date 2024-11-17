@@ -6,8 +6,11 @@
     <title>داشبورد</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        *{
-            -webkit-tap-highlight-color:transparent;
+        * {
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         /* تنظیمات پایه */
@@ -23,16 +26,10 @@
             justify-content: center;
             height: 100vh;
             overflow: hidden;
-            animation: gradientBackground 6s infinite alternate ease-in-out;
-        }
-
-        /* افکت تغییر پس‌زمینه */
-        @keyframes gradientBackground {
-            0% { background: #1f1f2e; }
-            100% { background: #3a506b; }
         }
 
         .container {
+            font-family: 'Vazir', sans-serif;
             padding: 40px;
             max-width: 700px;
             width: 90%;
@@ -40,31 +37,25 @@
             background: rgba(44, 62, 80, 0.85);
             box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.5);
             text-align: center;
-            animation: slideIn 1.5s ease-out forwards;
             transform-origin: center center;
-            transform: perspective(800px) rotateX(5deg);
+            animation: fadeIn 1.5s ease-out forwards;
         }
 
         h2 {
+            font-family:'Times New Roman', Times, serif;
             font-size: 28px;
-            color: #ffcc00;
+            color: #ffffff;
             margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            animation: textGlow 1.2s ease-out infinite alternate;
-            opacity: 0.9;
+            animation: glowEffect 1.5s infinite alternate ease-in-out;
         }
 
-        /* افکت نورانی روی متن */
-        /* @keyframes textGlow {
-            0% { text-shadow: 0px 0px 10px rgba(255, 205, 0, 0.5), 0px 0px 20px rgba(255, 205, 0, 0.7); }
-            100% { text-shadow: 0px 0px 15px rgba(255, 205, 0, 0.8), 0px 0px 30px rgba(255, 205, 0, 1); }
-        } */
 
-        /* انیمیشن ورود */
-        @keyframes slideIn {
-            0% { opacity: 0; transform: translateY(-30px) scale(0.9); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+        /* افکت fade-in برای ورود محتوا */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         /* استایل ناوبری */
@@ -80,37 +71,34 @@
             text-decoration: none;
             font-size: 18px;
             padding: 12px 20px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #3c3c55, #2e2e4f);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background: rgba(60, 60, 85, 0.7);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
             position: relative;
             overflow: hidden;
-            display: inline-block;
+            transition: all 0.4s ease;
         }
 
-        nav a::before {
+        /* افکت hover برای لینک‌ها */
+        nav a:hover {
+            border: 2px solid #ffcc00;
+            box-shadow: 0px 8px 15px rgba(255, 205, 0, 0.3);
+            transform: translateY(-5px) scale(1.03);
+        }
+
+        /* انیمیشن تکان برای hover */
+        nav a:hover::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transition: all 0.4s;
-            transform: translate(-50%, -50%) scale(0);
-        }
-
-        nav a:hover::before {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        nav a:hover {
-            background: linear-gradient(135deg, #ffcd00, #ff7600);
-            color: #2c2c40;
-            box-shadow: 0px 8px 15px rgba(255, 205, 0, 0.4);
+            mix-blend-mode: overlay;
             transform: scale(1.1);
+            opacity: 0.7;
         }
 
         /* دکمه خروج */
@@ -123,32 +111,34 @@
             border-radius: 10px;
             cursor: pointer;
             font-size: 20px;
-            transition: background 0.3s, transform 0.4s, box-shadow 0.4s;
-            width: 100%;
             position: relative;
             overflow: hidden;
+            transition: all 0.4s ease, transform 0.3s ease;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* افکت hover برای دکمه خروج */
+        .logout:hover {
+            background: #37a08b;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .logout::before {
             content: '';
             position: absolute;
-            width: 150%;
-            height: 200%;
-            top: -100%;
-            left: -50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: skewX(-45deg) rotate(30deg);
-            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(0);
+            transition: transform 0.4s ease;
         }
 
         .logout:hover::before {
-            transform: translateX(200%) skewX(-45deg) rotate(30deg);
-        }
-
-        .logout:hover {
-            background: #4e968b65;
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0px 8px 15px rgba(255, 82, 82, 0.4);
+            transform: scale(1);
+            opacity: 0.6;
         }
 
         /* ریسپانسیو برای موبایل */
@@ -167,7 +157,7 @@
             }
 
             .logout {
-                font-size: 14px;
+                font-size: 16px;
                 padding: 12px;
             }
         }
@@ -185,10 +175,10 @@
 </head>
 <body>
     <div class="container">
-        <h2>به داشبورد خوش آمدید، {{ current_user.username }}!</h2>
+        <h2>  خوش آمدید {{ current_user.username }}</h2>
         <nav>
             <a href="{{ url_for('view_floors') }}">مشاهده طبقات</a>
-            {% if current_user.username == 'user1' %}
+            {% if current_user.username == 'superuser' %}
                 <a href="{{ url_for('show_users') }}">مشاهده کاربران</a>
                 <a href="{{ url_for('add_user') }}">افزودن کاربر جدید</a>
                 <a href="{{ url_for('add_floor') }}">افزودن طبقه جدید</a>

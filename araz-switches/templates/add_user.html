@@ -122,11 +122,12 @@
 
         /* پیام‌های خطا و موفقیت */
         .alert {
+            background-color: #000000;
             padding: 12px;
             margin-bottom: 20px;
             border-radius: 8px;
             text-align: center;
-            color: white;
+            color: rgb(255, 255, 255);
             font-weight: bold;
             opacity: 0;
             animation: fadeInAlert 0.8s 0.2s forwards;
@@ -218,6 +219,9 @@
             }
         }
 
+  
+
+
         @media (max-width: 480px) {
             .container {
                 margin: 20px 10px;
@@ -251,18 +255,20 @@
 </head>
 <body>
     <div class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% endwith %}
         <h2>افزودن کاربر جدید</h2>
 
-        <!-- نمایش پیام flash -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert {{ category }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+  
 
         <form method="POST">
             <div class="form-group">
