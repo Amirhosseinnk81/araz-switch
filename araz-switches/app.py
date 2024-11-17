@@ -5,7 +5,6 @@ from datetime import datetime
 import pytz
 import jdatetime
 from functools import wraps
-from flask_principal import Principal, Permission, RoleNeed
 
 # راه‌اندازی اپلیکیشن Flask
 app = Flask(__name__)
@@ -55,6 +54,15 @@ class Device(db.Model):
 
     floor = db.relationship('Floor', backref=db.backref('devices', lazy=True))
 
+def get_description_for_device(device_id):
+    return Description.query.filter_by(device_id=device_id).order_by(Description.Date.desc()).all()
+
+#گرفتن دستگاه ها خاص توسط id 
+def get_device_by_id(id):    
+    return  Device.query.get_or_404(id)
+
+
+
 # ایجاد جدول‌ها در دیتابیس
 with app.app_context():
     db.create_all()
@@ -98,10 +106,44 @@ def to_jalali(datetime_obj):
     return f"{jalali_date.strftime('%Y/%m/%d')} {jalali_time}"
 
 
-# @app.before_request
-# def redirect_if_not_logged_in():
-#     if not current_user.is_authenticated and request.endpoint != 'login' and not request.endpoint.startswith('static'):
-#         return redirect(url_for('login', next=request.url))
+#ویرایش تو ضیحات
+
+
+@app.route('/edit_description/<int:description_id>', methods=['GET', 'POST'])
+@login_required
+def edit_description(description_id):
+    # دریافت توضیحات از پایگاه داده
+    description = Description.query.get_or_404(description_id)
+
+    # دریافت دستگاه مرتبط با توضیحات
+    device = Device.query.get(description.device_id)
+
+    # دیگر نیازی به بررسی مالکیت نیست
+    # بررسی دسترسی کاربر به ویرایش توضیحات (این شرط حذف می‌شود)
+    # if description.user_id != current_user.id and current_user.username not in ['user1', 'user2']:
+    #     flash('شما دسترسی به ویرایش این توضیحات را ندارید.', 'danger')
+    #     return redirect(url_for('view_device', device_id=description.device_id))
+
+    # اگر درخواست POST بود، تغییرات را ذخیره می‌کنیم
+    if request.method == 'POST':
+        # دریافت محتوای جدید توضیحات از فرم
+        description.content = request.form['content']
+
+        # به روز رسانی تاریخ و زمان ویرایش
+        description.Date = datetime.now(pytz.timezone('Asia/Tehran'))
+
+        # ذخیره تغییرات در پایگاه داده
+        db.session.commit()
+
+        # نمایش پیام موفقیت
+        flash('توضیحات با موفقیت ویرایش شد.', 'success')
+
+        # هدایت به صفحه جزئیات دستگاه
+        return redirect(url_for('device_details', device_id=description.device_id))
+
+    # اگر درخواست GET بود، فرم ویرایش را نمایش می‌دهیم
+    return render_template('edit_description.html', description=description, device=device)
+
 
 # صفحه لاگین
 @app.route('/login', methods=['GET', 'POST'])
@@ -120,7 +162,6 @@ def login():
     
     return render_template('login.html')
 
-
 def require_login_and_redirect(f):
     """دکوراتوری که کاربر را به صفحه ورود هدایت می‌کند و پس از لاگین به صفحه قبلی بازمی‌گرداند."""
     @wraps(f)
@@ -133,12 +174,6 @@ def require_login_and_redirect(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# مقداردهی اولیه
-principals = Principal(app)
-
-# تعریف نیازمندی‌های نقش
-admin_permission = Permission(RoleNeed('admin'))
-moderator_permission = Permission(RoleNeed('superuser'))
 
 # صفحه داشبورد پس از ورود
 @app.route('/dashboard')
@@ -148,7 +183,6 @@ def dashboard():
 
 # صفحه اضافه کردن floor
 @app.route('/add_floor', methods=['GET', 'POST'])
-@admin_permission.require()
 @login_required
 def add_floor():
     if request.method == 'POST':
@@ -157,7 +191,7 @@ def add_floor():
         db.session.add(new_floor)
         db.session.commit()
         return redirect(url_for('view_floors'))
-    
+
     return render_template('add_floor.html')
 
 # نمایش لیست floor ها
@@ -193,7 +227,7 @@ def add_device(floor_id):
 
     return render_template('add_device.html', floor=floor)
 
-# نمایش دستگاه‌های یک طبقه
+# نمایش  همه دستگاه‌های یک طبقه
 @app.route('/view_devices/<int:floor_id>')
 @login_required
 def view_devices(floor_id):
@@ -201,13 +235,16 @@ def view_devices(floor_id):
     devices = Device.query.filter_by(floor_id=floor.id).all()
     return render_template('view_devices.html', floor=floor, devices=devices)
 
-@app.route('/device/<int:device_id>')
+
+
+#نمایش دستگاه مد نظر
+@app.route('/device/<int:device_id>', methods=['GET'])
 @require_login_and_redirect
 def device_details(device_id):
-    device = Device.query.get_or_404(device_id)
-    return render_template('device_details.html', device=device)
-
-
+    
+    device = get_device_by_id(device_id) 
+    description = get_description_for_device(device_id)  
+    return render_template('device_details.html', device=device, description=description)
 
 # صفحه ویرایش دستگاه
 @app.route('/edit_device/<int:device_id>', methods=['GET', 'POST'])
@@ -229,11 +266,7 @@ def edit_device(device_id):
 # روت برای افزودن کاربر جدید
 @app.route('/add_user', methods=['GET', 'POST'])
 @login_required
-def add_user():
-    if current_user.username != 'user1':
-        flash('شما اجازه دسترسی به این صفحه را ندارید', 'danger')
-        return redirect(url_for('dashboard'))
-
+def add_user():   
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -280,9 +313,7 @@ def edit_user(user_id):
 @app.route('/show_users')
 @login_required
 def show_users():
-    if current_user.username != 'user1':
-        flash('شما اجازه دسترسی به این صفحه را ندارید', 'danger')
-        return redirect(url_for('dashboard'))
+
 
     users = User.query.all()  # دریافت لیست تمام کاربران
     return render_template('show_users.html', users=users)
@@ -351,4 +382,4 @@ def delete_device(device_id):
 if __name__ == "__main__":
     app.run(debug=True)
 
-    # host='192.168.143.233', port=5000
+#host='192.168.143.233', port=5000
