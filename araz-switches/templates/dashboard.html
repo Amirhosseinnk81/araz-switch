@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +43,7 @@
         }
 
         h2 {
-            font-family:'Times New Roman', Times, serif;
+            font-family: 'Times New Roman', Times, serif;
             font-size: 28px;
             color: #ffffff;
             margin-bottom: 25px;
@@ -54,8 +55,15 @@
 
         /* افکت fade-in برای ورود محتوا */
         @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* استایل ناوبری */
@@ -172,21 +180,22 @@
             }
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h2>  خوش آمدید {{ current_user.username }}</h2>
+
+<div class="container">
+        <h2> خوش آمدید {{ current_user.username }}</h2>
         <nav>
             <a href="{{ url_for('view_floors') }}">مشاهده طبقات</a>
             {% if current_user.username == 'superuser' %}
-                <a href="{{ url_for('show_users') }}">مشاهده کاربران</a>
-                <a href="{{ url_for('add_user') }}">افزودن کاربر جدید</a>
-                <a href="{{ url_for('add_floor') }}">افزودن طبقه جدید</a>
+            <a href="{{ url_for('show_users') }}">مشاهده کاربران</a>
+            <a href="{{ url_for('add_user') }}">افزودن کاربر جدید</a>
+            <a href="{{ url_for('add_floor') }}">افزودن طبقه جدید</a>
             {% endif %}
         </nav>
         <form method="POST" action="{{ url_for('logout') }}" style="display: inline;">
             <button type="submit" class="logout">خروج از سیستم</button>
         </form>
     </div>
-</body>
+
+    </body>
+
 </html>

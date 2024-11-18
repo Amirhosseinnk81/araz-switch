@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه اصلی</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet">
+    <!-- اضافه کردن لینک برای آیکون‌های Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* استایل‌های عمومی */
+        body {
+            font-family: 'Vazir', sans-serif;
+            background: linear-gradient(135deg, #1f1f2e, #2c3e50);
+            color: #f0f0f5;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            overflow: scroll;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* استایل برای navbar و دکمه‌ها */
+        .navbar {
+            background-color: #34495e;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+            position: fixed; /* برای قرار گرفتن در بالای صفحه */
+            top: 20px; /* فاصله از بالای صفحه */
+            right: 20px; /* فاصله از سمت راست */
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-left: 10px; /* فاصله بین دکمه‌ها */
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            background-color: #1abc9c;
+        }
+
+        /* استایل برای آیکون‌ها */
+        .navbar a i {
+            margin-left: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <!-- دکمه داشبورد با آیکون -->
+        <a href="{{ url_for('dashboard') }}">
+            داشبورد
+            <i class="fas fa-tachometer-alt"></i> <!-- آیکون داشبورد -->
+        </a>
+        <!-- دکمه خروج با آیکون -->
+        <a href="{{ url_for('login') }}">
+            خروج
+            <i class="fas fa-sign-out-alt"></i> <!-- آیکون خروج -->
+        </a>
+    </div>
+
+    {% block content %}
+    <!-- محتوای صفحات فرزند اینجا قرار می‌گیرد -->
+    {% endblock %}
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</html>

@@ -1,254 +1,267 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لیست طبقات</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        * {
-            -webkit-tap-highlight-color:transparent;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+{% extends "base.html" %}
+
+{% block title %}dashboard{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        -webkit-tap-highlight-color: transparent;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Vazir', sans-serif;
+        background: linear-gradient(135deg, #283048, #859398);
+        color: #f0f0f5;
+        line-height: 1.6;
+        direction: rtl;
+        text-align: right;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: scroll;
+        animation: gradientBackground 6s infinite alternate ease-in-out;
+    }
+
+    @keyframes gradientBackground {
+        0% {
+            background: #283048;
         }
 
-        body {
-            font-family: 'Vazir', sans-serif;
-            background: linear-gradient(135deg, #283048, #859398);
-            color: #f0f0f5;
-            line-height: 1.6;
-            direction: rtl;
-            text-align: right;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            animation: gradientBackground 6s infinite alternate ease-in-out;
+        100% {
+            background: #3c6478;
+        }
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 30px;
+        background: rgba(44, 62, 80, 0.9);
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(15px);
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        @keyframes gradientBackground {
-            0% { background: #283048; }
-            100% { background: #3c6478; }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 30px;
-            background: rgba(44, 62, 80, 0.9);
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(15px);
-            animation: fadeIn 1s ease;
-        }
+    h2 {
+        font-size: 36px;
+        color: #ffffff;
+        margin-bottom: 20px;
+        text-align: center;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
 
+    li {
+        background: none;
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    li:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-container {
+        display: flex;
+        gap: 10px;
+        position: absolute;
+        left: 20px;
+        transform: translateY(-50%);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1;
+    }
+
+    .btn-container.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+    }
+
+    button {
+        font-family: 'Vazir', sans-serif;
+        background: linear-gradient(145deg, #4e81d9, #3a5a87);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 24px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        flex: 1;
+        text-align: center;
+    }
+
+    button:hover {
+        transform: scale(1.05) translateY(-3px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    button:active {
+        transform: scale(0.95) translateY(2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .view-btn {
+        background: #000000;
+    }
+
+    .view-btn:hover {
+        background: #00000075;
+    }
+
+    .add-btn {
+        background: #000000;
+    }
+
+    .add-btn:hover {
+        background: #00000075;
+    }
+
+    .back-link-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .back-link {
+        display: inline-block;
+        text-align: center;
+        font-size: 18px;
+        color: #f0f0f5;
+        background: linear-gradient(145deg, #2c3e50, #1c2d41);
+        padding: 12px 30px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        flex: 1;
+    }
+
+    .back-link:hover {
+        background: linear-gradient(145deg, #1f4868, #1c3a52);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-link:active {
+        transform: translateY(2px);
+    }
+
+    @media (max-width: 768px) {
         h2 {
-            font-size: 36px;
-            color: #ffffff;
-            margin-bottom: 20px;
-            text-align: center;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
+            font-size: 30px;
         }
 
         li {
-            background: none;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 12px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            font-size: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        li:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-container {
-            display: flex;
-            gap: 10px;
-            position: absolute;
-            left: 20px;
-            transform: translateY(-50%);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            z-index: 1;
-        }
-
-        .btn-container.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
+            padding: 15px;
+            font-size: 16px;
         }
 
         button {
-            font-family: 'Vazir', sans-serif;
-            background: linear-gradient(145deg, #4e81d9, #3a5a87);
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 24px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            flex: 1;
-            text-align: center;
-        }
-
-        button:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        button:active {
-            transform: scale(0.95) translateY(2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .view-btn {
-            background: #000000;
-        }
-
-        .view-btn:hover {
-            background:#00000075;
-        }
-
-        .add-btn {
-            background: #000000;
-        }
-
-        .add-btn:hover {
-            background: #00000075;
-        }
-
-        .back-link-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 30px;
-            flex-wrap: wrap;
+            padding: 10px 18px;
+            font-size: 14px;
         }
 
         .back-link {
-            display: inline-block;
+            font-size: 14px;
+        }
+
+        .back-link-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .back-link {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .btn-container {
+            flex-direction: column;
+            gap: 5px;
+            left: auto;
+            position: relative;
+            transform: none;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .view-btn,
+        .add-btn {
+            width: 100%;
             text-align: center;
-            font-size: 18px;
-            color: #f0f0f5;
-            background: linear-gradient(145deg, #2c3e50, #1c2d41);
-            padding: 12px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            flex: 1;
         }
-
-        .back-link:hover {
-            background: linear-gradient(145deg, #1f4868, #1c3a52);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .back-link:active {
-            transform: translateY(2px);
-        }
-
-        @media (max-width: 768px) {
-            h2 {
-                font-size: 30px;
-            }
-
-            li {
-                padding: 15px;
-                font-size: 16px;
-            }
-
-            button {
-                padding: 10px 18px;
-                font-size: 14px;
-            }
-
-            .back-link {
-                font-size: 14px;
-            }
-
-            .back-link-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .back-link {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .btn-container {
-                flex-direction: column;
-                gap: 5px;
-                left: auto;
-                position: relative;
-                transform: none;
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .view-btn, .add-btn {
-                width: 100%;
-                text-align: center;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
+
 <body>
     <div class="container">
         <h2>لیست طبقات</h2>
         <ul>
             {% if floors %}
-                {% for floor in floors %}
-                    <li onclick="toggleButtons(this)">
-                        <strong>{{ floor.name }}</strong>
-                        
-                            <div class="btn-container">
-                                {% if not devices %}
-                                <a href="{{ url_for('view_devices', floor_id=floor.id) }}">
-                                    <button class="view-btn">مشاهده دستگاه‌ها</button>
-                                </a>
-                                {% endif %}  
-                        
-                            {% if current_user.username == 'superuser' %}
-                                <a href="{{ url_for('add_device', floor_id=floor.id) }}">
-                                    <button class="add-btn">افزودن دستگاه</button>
-                                </a>
-                            {% endif %}
-                        </div>
-                    </li>
-                {% endfor %}
+            {% for floor in floors %}
+            <li onclick="toggleButtons(this)">
+                <strong>{{ floor.name }}</strong>
+
+                <div class="btn-container">
+                    {% if not devices %}
+                    <a href="{{ url_for('view_devices', floor_id=floor.id) }}">
+                        <button class="view-btn">مشاهده دستگاه‌ها</button>
+                    </a>
+                    {% endif %}
+
+                    {% if current_user.username == 'superuser' %}
+                    <a href="{{ url_for('add_device', floor_id=floor.id) }}">
+                        <button class="add-btn">افزودن دستگاه</button>
+                    </a>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
             {% else %}
-                <p style="text-align: center; font-family: 'Vazir', sans-serif; font-size: 28px; color: #ffffff;">هیچ طبقه‌ای وارد نکرده‌اید.</p>
+            <p style="text-align: center; font-family: 'Vazir', sans-serif; font-size: 28px; color: #ffffff;">هیچ
+                طبقه‌ای وارد نکرده‌اید.</p>
             {% endif %}
         </ul>
         <div class="back-link-container">
@@ -257,17 +270,16 @@
     </div>
 
     <script>
-function toggleButtons(floor) {
-    // تمام دکمه‌ها را در ابتدا مخفی کن
-    const allBtnContainers = document.querySelectorAll('.btn-container');
-    allBtnContainers.forEach(btnContainer => {
-        btnContainer.classList.remove('show');
-    });
+        function toggleButtons(floor) {
+            // تمام دکمه‌ها را در ابتدا مخفی کن
+            const allBtnContainers = document.querySelectorAll('.btn-container');
+            allBtnContainers.forEach(btnContainer => {
+                btnContainer.classList.remove('show');
+            });
 
-    // دکمه‌های مربوط به floor خاص را نمایش بده
-    const btnContainer = floor.querySelector('.btn-container');
-    btnContainer.classList.toggle('show');
-}
+            // دکمه‌های مربوط به floor خاص را نمایش بده
+            const btnContainer = floor.querySelector('.btn-container');
+            btnContainer.classList.toggle('show');
+        }
     </script>
-</body>
-</html>
+{% endblock %}
