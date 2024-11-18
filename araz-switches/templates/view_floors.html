@@ -83,9 +83,6 @@
         border-radius: 12px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         font-size: 18px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         cursor: pointer;
         overflow: hidden;
         position: relative;
@@ -95,25 +92,17 @@
     li:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        background-color: rgba(255, 255, 255, 0.1);
     }
 
     .btn-container {
-        display: flex;
-        gap: 10px;
-        position: absolute;
-        left: 20px;
-        transform: translateY(-50%);
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        z-index: 1;
+        display: none;
+        padding-top: 10px;
     }
 
     .btn-container.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(0);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     button {
@@ -126,8 +115,6 @@
         cursor: pointer;
         font-size: 16px;
         transition: all 0.3s ease;
-        flex: 1;
-        text-align: center;
     }
 
     button:hover {
@@ -141,11 +128,11 @@
     }
 
     .view-btn {
-        background: #000000;
+        background: #1abc9c;
     }
 
     .view-btn:hover {
-        background: #00000075;
+        background: #16a085;
     }
 
     .add-btn {
@@ -241,7 +228,7 @@
         <ul>
             {% if floors %}
             {% for floor in floors %}
-            <li onclick="toggleButtons(this)">
+            <li onclick="toggleSubMenu(this)">
                 <strong>{{ floor.name }}</strong>
 
                 <div class="btn-container">
@@ -270,16 +257,20 @@
     </div>
 
     <script>
-        function toggleButtons(floor) {
-            // تمام دکمه‌ها را در ابتدا مخفی کن
-            const allBtnContainers = document.querySelectorAll('.btn-container');
-            allBtnContainers.forEach(btnContainer => {
-                btnContainer.classList.remove('show');
-            });
-
-            // دکمه‌های مربوط به floor خاص را نمایش بده
+        function toggleSubMenu(floor) {
             const btnContainer = floor.querySelector('.btn-container');
-            btnContainer.classList.toggle('show');
+
+            // نمایش یا مخفی کردن دکمه‌های زیرمنو
+            if (btnContainer.classList.contains('show')) {
+                btnContainer.classList.remove('show');
+            } else {
+                // بستن سایر زیرمنوها
+                const allBtnContainers = document.querySelectorAll('.btn-container.show');
+                allBtnContainers.forEach(container => container.classList.remove('show'));
+
+                // باز کردن زیرمنو فعلی
+                btnContainer.classList.add('show');
+            }
         }
     </script>
-{% endblock %}
+    {% endblock %}

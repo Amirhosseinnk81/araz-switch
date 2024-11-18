@@ -9,7 +9,6 @@
     <!-- اضافه کردن لینک برای آیکون‌های Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* استایل‌های عمومی */
         body {
             font-family: 'Vazir', sans-serif;
             background: linear-gradient(135deg, #1f1f2e, #2c3e50);
@@ -17,49 +16,82 @@
             margin: 0;
             padding: 0;
             direction: rtl;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
             height: 100vh;
-            overflow: scroll;
-            width: 100%;
-            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* استایل برای navbar و دکمه‌ها */
+        /* استایل برای navbar */
         .navbar {
+            position: fixed;
+            top: 10px;
+            right: 10px;
             background-color: #34495e;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 8px 10px;
+            border-radius: 10px;
             display: flex;
-            justify-content: flex-start;
+            flex-direction: row;
             align-items: center;
-            margin-bottom: 20px;
-            position: fixed; /* برای قرار گرفتن در بالای صفحه */
-            top: 20px; /* فاصله از بالای صفحه */
-            right: 20px; /* فاصله از سمت راست */
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
         }
 
         .navbar a {
             color: #ffffff;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 8px 10px;
             border-radius: 5px;
+            font-size: 14px;
             transition: background-color 0.3s;
-            margin-left: 10px; /* فاصله بین دکمه‌ها */
-            font-size: 18px;
+            display: flex;
+            align-items: center;
         }
 
         .navbar a:hover {
             background-color: #1abc9c;
         }
 
-        /* استایل برای آیکون‌ها */
         .navbar a i {
             margin-left: 5px;
+            font-size: 16px;
         }
 
+        /* استایل ریسپانسیو */
+        @media (max-width: 768px) {
+            .navbar {
+                top: 5px;
+                right: 5px;
+                padding: 6px 8px;
+                gap: 5px;
+            }
+
+            .navbar a {
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+
+            .navbar a i {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                flex-direction: column;
+                /* دکمه‌ها به صورت عمودی مرتب می‌شوند */
+                align-items: flex-start;
+                padding: 6px;
+            }
+
+            .navbar a {
+                width: 100%;
+                text-align: right;
+                margin-bottom: 5px;
+            }
+        }
     </style>
 </head>
 
