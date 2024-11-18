@@ -8,6 +8,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -23,9 +24,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: inherit;
+        overflow: auto;
         padding: 20px;
         animation: fadeIn 1s ease-out;
+        height: 100%;
     }
 
     @keyframes fadeIn {
@@ -182,6 +184,8 @@
     }
 
     .description-form {
+        font-family: 'Vazir', sans-serif;
+        font-size: 20px;
         background-color: #2c3e50;
         border-radius: 10px;
         padding: 25px;
@@ -269,9 +273,6 @@
             font-size: 16px;
         }
 
-        .back-link {
-            font-size: 16px;
-        }
 
         .device-details th,
         .device-details td {
@@ -296,9 +297,7 @@
             padding: 10px 20px;
         }
 
-        .back-link {
-            font-size: 14px;
-        }
+
 
         .device-details th,
         .device-details td {
@@ -307,10 +306,6 @@
         }
 
 
-        .back-link:hover {
-            color: #12bbf3;
-            transform: translateY(-5px);
-        }
 
         .description-form {
             background: rgba(44, 62, 80, 0.8);
@@ -319,30 +314,101 @@
             margin-top: 30px;
             width: 100%;
         }
+    }
 
-        .edit-link {
-            display: inline-block;
-            background-color: #3498db;
-            /* رنگ آبی زیبا */
-            color: #ffffff;
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+        /* برای جلوگیری از تراکم دکمه‌ها در کنار هم */
+    }
+
+    /* استایل دکمه‌ها */
+    .action-button {
+        font-family: 'Vazir', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #3498db;
+        color: #ffffff;
+        padding: 12px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        gap: 8px;
+        text-transform: uppercase;
+        width: auto;
+        /* به دکمه‌ها اجازه می‌دهد به اندازه محتوا تنظیم شوند */
+    }
+
+    .action-button i {
+        font-size: 20px;
+        margin-left: 8px;
+    }
+
+    /* .action-button:hover {
+        transform: scale(1.05);
+    } */
+
+    /* .action-button:active {
+        transform: scale(0.98);
+    } */
+
+    .delete-button {
+        background-color: #e74c3c;
+    }
+
+    .delete-button:hover {
+        background-color: #c0392b;
+    }
+
+    .edit-button {
+        background-color: #f39c12;
+    }
+
+    .edit-button:hover {
+        background-color: #e67e22;
+    }
+
+    .back-button {
+        background-color: #2ecc71;
+    }
+
+    .back-button:hover {
+        background-color: #27ae60;
+    }
+
+    /* ریسپانسیو برای صفحه‌های کوچک */
+    @media (max-width: 768px) {
+        .actions {
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .action-button {
+            width: 100%;
+            /* دکمه‌ها عرض 100% را می‌گیرند */
             padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            font-size: 14px;
         }
+    }
 
-        .edit-link:hover {
-            background-color: #2980b9;
-            /* رنگ آبی تیره‌تر هنگام هاور */
-            transform: scale(1.05);
-        }
-
-        .edit-link:active {
-            transform: scale(0.98);
+    /* ریسپانسیو برای صفحه‌های خیلی کوچک */
+    @media (max-width: 480px) {
+        .action-button {
+            width: 100%;
+            /* دکمه‌ها عرض 100% را می‌گیرند */
+            font-size: 12px;
+            padding: 8px 15px;
         }
     }
 </style>
@@ -351,8 +417,8 @@
 <body>
 
     <div class="container">
-        
         <h2>جزئیات دستگاه {{ device.name }}</h2>
+
         <table class="device-details">
             <tr>
                 <th>Name </th>
@@ -394,15 +460,6 @@
         </ul>
         {% endif %}
 
-        {% if current_user.username == 'superuser' %}
-
-        <a href="{{ url_for('edit_device', device_id=device.id) }}" class="back-link"><i class="fa fa-edit"></i>
-            ویرایش</a>
-        <form method="POST" action="{{ url_for('delete_device', device_id=device.id) }}" style="display: inline;">
-            <button type="submit" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این دستگاه را حذف کنید؟')">حذف
-                دستگاه</button>
-        </form>
-        {% endif %}
 
         {% if current_user.username != 'superuser' %}
         <div class="description-form">
@@ -413,9 +470,19 @@
             </form>
         </div>
         {% endif %}
-
-        <a href="{{ url_for('view_devices', floor_id=device.floor_id) }}" class="back-link">بازگشت به لیست دستگاه‌ها</a>
-
+        <div class="actions">
+            {% if current_user.username == 'superuser' %}
+            <a href="{{ url_for('delete_device', device_id=device.id) }}" class="action-button delete-button"
+                onclick="return confirm('آیا مطمئن هستید که می‌خواهید این دستگاه را حذف کنید؟')">
+                <i class="fas fa-trash-alt"></i> حذف
+            </a>
+            <a href="{{ url_for('edit_device', device_id=device.id) }}" class="action-button edit-button">
+                <i class="fas fa-edit"></i> ویرایش
+            </a>
+            {% endif %}
+            <a href="{{ url_for('view_devices', floor_id=device.floor_id) }}" class="action-button back-button">
+                <i class="fas fa-arrow-left"></i> بازگشت
+            </a>
+        </div>
     </div>
-
-{% endblock %}
+    {% endblock %}

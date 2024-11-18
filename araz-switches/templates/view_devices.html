@@ -5,6 +5,7 @@
 {% block content %}
 <style>
     * {
+        -webkit-tap-highlight-color: transparent;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -84,7 +85,7 @@
         background-color: #34495e;
         border-radius: 12px;
         margin-bottom: 20px;
-        padding: 20px;
+        padding: 10px;
         display: flex;
         flex-direction: column;
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
@@ -98,10 +99,10 @@
 
     li a {
         color: #fffffd;
+        display: flex;
         text-decoration: none;
         font-weight: 500;
         transition: color 0.3s ease;
-        margin-top: 15px;
         position: relative;
     }
 
@@ -123,20 +124,36 @@
         transform-origin: bottom left;
     }
 
-    .back-link {
-        background-color: #3524a300;
-        display: block;
-        text-align: center;
+    .back-link-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
         margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .back-link {
+        display: inline-block;
+        text-align: center;
         font-size: 18px;
-        color: #ffffff;
+        color: #f0f0f5;
+        background: linear-gradient(145deg, #2c3e50, #1c2d41);
+        padding: 12px 30px;
+        border-radius: 8px;
         text-decoration: none;
-        transition: color 0.3s ease, transform 0.3s ease;
+        transition: all 0.3s ease;
+        flex: 1;
+        width: 100%;
     }
 
     .back-link:hover {
-        color: #12bbf3;
+        background: linear-gradient(145deg, #1f4868, #1c3a52);
         transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-link:active {
+        transform: translateY(2px);
     }
 
     @media (max-width: 768px) {

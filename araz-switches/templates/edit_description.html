@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazir:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * {
+            -webkit-tap-highlight-color: transparent;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -14,7 +16,8 @@
 
         body {
             font-family: 'Vazir', sans-serif;
-            background: linear-gradient(135deg, #4f5d73, #2c3e50); /* پس‌زمینه مدرن */
+            background: linear-gradient(135deg, #4f5d73, #2c3e50);
+            /* پس‌زمینه مدرن */
             color: #f0f0f5;
             line-height: 1.8;
             direction: rtl;
@@ -30,8 +33,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .container {
@@ -47,11 +57,12 @@
         }
 
         h2 {
-            font-size: 42px;
-            color: #ffcc00; /* رنگ طلایی */
+            font-size: 36px;
+            color: #f7f6f5;
+            /* رنگ طلایی */
             margin-bottom: 30px;
             text-align: center;
-            font-weight: 600;            
+            font-weight: 600;
         }
 
         form {
@@ -81,7 +92,8 @@
         }
 
         button {
-            background-color: #1abc9c; /* رنگ سبز فیروزه‌ای */
+            background-color: #1abc9c;
+            /* رنگ سبز فیروزه‌ای */
             color: white;
             border: none;
             border-radius: 8px;
@@ -103,23 +115,46 @@
             transform: scale(0.98);
         }
 
-        .back-link {
-            background-color: #3524a300;
-            display: block;
-            text-align: center;
+        .back-link-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
             margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .back-link {
+            display: inline-block;
+            text-align: center;
             font-size: 18px;
-            color: #ffffff;
+            color: #f0f0f5;
+            background: linear-gradient(145deg, #2c3e50, #1c2d41);
+            padding: 12px 30px;
+            border-radius: 8px;
             text-decoration: none;
-            transition: color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
+            flex: 1;
+            width: 100%;
         }
 
         .back-link:hover {
-            color: #12bbf3;
+            background: linear-gradient(145deg, #1f4868, #1c3a52);
             transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-link:active {
+            transform: translateY(2px);
+        }
+
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 26px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -127,13 +162,12 @@
 
         {% if description %}
         <form method="POST" action="{{ url_for('edit_description', description_id=description.id) }}">
-           
-            <label for="content">ویرایش توضیحات:</label>
+
             <textarea name="content" id="content" required>{{ description.content }}</textarea>
             <button type="submit">ذخیره تغییرات</button>
         </form>
         {% else %}
-            <p>توضیحات یافت نشد.</p>
+        <p>توضیحات یافت نشد.</p>
         {% endif %}
 
         <a href="{{ url_for('device_details', device_id=device.id) }}" class="back-link">بازگشت به جزئیات دستگاه</a>
@@ -141,4 +175,5 @@
     </div>
 
 </body>
+
 </html>
