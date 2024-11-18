@@ -58,7 +58,7 @@
 
         h2 {
             font-size: 42px;
-            color: #ffcc00; /* رنگ طلایی */
+            color: #ffffff; /* رنگ طلایی */
             margin-bottom: 30px;
             text-align: center;
             font-weight: 600;            
@@ -381,11 +381,6 @@
         </form>
     </div>
 {% endif %}
-
-<!-- {% if current_user.username in ['user1', 'user2'] %}
-    <a href="{{ url_for('edit_description', description_id=description.id) }}" class="edit-link">ویرایش توضیحات</a>
-{% endif %} -->
-
 
 <a href="{{ url_for('view_devices', floor_id=device.floor_id) }}" class="back-link">بازگشت به لیست دستگاه‌ها</a>
 

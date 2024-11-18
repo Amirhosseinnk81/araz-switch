@@ -58,16 +58,9 @@
         h2 {
             font-size: 24px;
             margin-bottom: 20px;
-            color: #ffcc00;
-            /* animation: textGlow 1.2s ease-out infinite alternate; */
+            color: #ffffff;
             opacity: 0.9;
         }
-
-        /* افکت نورانی روی متن */
-        /* @keyframes textGlow {
-            0% { text-shadow: 0px 0px 10px rgba(255, 205, 0, 0.5), 0px 0px 20px rgba(255, 205, 0, 0.7); }
-            100% { text-shadow: 0px 0px 15px rgba(255, 205, 0, 0.8), 0px 0px 30px rgba(255, 205, 0, 1); }
-        } */
 
         label {
             font-size: 18px;
@@ -140,14 +133,14 @@
 </head>
 <body>
     <div class="form-container">
-        <h2>ورود به حساب کاربری</h2>
+        <h2>LOGIN PAGE</h2>
         <form method="POST" action="{{ url_for('login') }}">
-            <label for="username">نام کاربری:</label>
-            <input type="text" id="username" name="username" required>
+            <label for="username"></label>
+            <input type="text" id="username" name="username" placeholder="USERNAME" required>
             
-            <label for="password">رمز عبور:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">ورود</button>
+            <label for="password"></label>
+            <input type="password" id="password" name="password" placeholder="PASSWORD" required>
+            <button type="submit">SIGN IN</button>
         </form>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
